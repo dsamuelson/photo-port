@@ -1,17 +1,31 @@
 import React, {useState} from "react";
+import { validateEmail } from '../../utils/helpers';
 
 function ContactForm() {
+    const [errorMessage, setErrorMessage] = useState('');
     const [formState, setFormState] = useState({ name: '', email: '', message: ''});
     const { name, email, message } = formState;
 
     function handleChange(e) {
+        if (e.target.name === 'email') {
+            const isValid = validateEmail(e.target.value);
+            console.log(isValid);
+            // isValid conditional statement
+          }  
         setFormState({...formState, [e.target.name]: e.target.value })
+        
     }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        console.log(formState);
+        
+      }
 
     return (
         <section>
           <h1>Contact me</h1>
-          <form id="contact-form">
+          <form id="contact-form" onSubmit={handleSubmit}>
             <div>
                 <label htmlFor="name">Name:</label>
                 <input type="text" name="name" defaultValue={name} onChange={handleChange}/>
